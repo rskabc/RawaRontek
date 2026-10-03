@@ -1,0 +1,46 @@
+scan:
+  timeout: 10
+  command_timeout: 120
+
+ports:
+  list:
+    - 21
+    - 22
+    - 80
+    - 443
+    - 8080
+    - 8443
+
+output:
+  directory: reports
+
+profiles:
+  quick:
+    - dns
+    - http
+    - ports
+    - tls
+
+  standard:
+    - dns
+    - subdomains
+    - naabu
+    - httpx
+    - nmap
+
+  full:
+    - standard
+    - amass
+    - katana
+    - ffuf
+    - nuclei
+    - nmap_safe
+    - wayback
+    - cve
+
+  web:
+    - httpx
+    - katana
+    - ffuf
+    - nuclei
+    - headers
