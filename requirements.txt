@@ -1,0 +1,4 @@
+dnspython>=2.6,<3
+python-whois>=0.9,<1
+requests>=2.32,<3
+PyYAML>=6.0,<7
