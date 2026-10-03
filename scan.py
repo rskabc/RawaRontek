@@ -8,6 +8,7 @@ from pathlib import Path
 from rawarontek.config import load_config
 from rawarontek.core import ScanContext
 from rawarontek.intelligence.correlation import build_cve_candidates
+from rawarontek.intelligence.engine import build_cve_intelligence
 from rawarontek.recon import (
     dns_enum, ftp_anonymous_check, historical_exposure, http_headers,
     quick_ports, security_headers_check, tls_check, whois_lookup,
@@ -134,11 +135,11 @@ def main() -> int:
         "started_at": started.isoformat(),
         "completed_at": datetime.now(timezone.utc).isoformat(),
         "summary": ctx.summary,
-        "cve_candidates": cve_candidates,
+        "cve_candidates": cve_candidates,\n        "cve_intelligence": cve_intelligence,
     }
 
     write_json(data, report_dir / "report.json")
-    write_html(target, ctx.summary, cve_candidates, report_dir / "report.html")
+    write_html(target, ctx.summary, cve_intelligence or cve_candidates, report_dir / "report.html")
     write_report(ctx, str(report_dir))
 
     print("\n============================================================")
@@ -146,7 +147,7 @@ def main() -> int:
     print(f"TXT : {report_dir / (target + '_hasil.txt')}")
     print(f"JSON: {report_dir / 'report.json'}")
     print(f"HTML: {report_dir / 'report.html'}")
-    print(f"CVE candidates: {len(cve_candidates)}")
+    print(f"CVE candidates: {len(cve_candidates)}")\n    print(f"CVE intelligence matches: {len(cve_intelligence)}")
     print("============================================================")
     return 0
 
